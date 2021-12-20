@@ -16,5 +16,9 @@
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.44.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "github-markdown-css": "^5.1.0",
+    "svelte-preprocess-markdown": "^2.7.3"
+  }
 }
