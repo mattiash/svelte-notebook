@@ -1,17 +1,41 @@
 const { markdown, Renderer } = require('svelte-preprocess-markdown');
 const renderer = Renderer();
 
-let allCode = '';
+const globalCode = `
+function format(num) {
+	return num.toLocaleString()
+}
+`;
+
+let allRunCode = globalCode;
 
 renderer.codeOrg = renderer.code;
 renderer.code = (code, infostring, escaped) => {
-	console.log(infostring);
-	allCode = allCode + code;
-	code = code.replace(/\$:/g, '');
-	const org = renderer.codeOrg(code, infostring, escaped);
-	// Log org here if you ever want to change this...
-	return org;
-	// return org.replace('<code>', '<code>{`').replace('</code>', '`}</code>');
+	const runCode = code
+		// Replace ranges with default value
+		.replace(/\d+:(\d+):\d+(:\d+){0,1}/g, '$1');
+
+	allRunCode = allRunCode + '\n' + runCode;
+
+	const displayCode = code.replace(/\$: /g, 'let ');
+	console.log(displayCode);
+	const htmlCode = renderer.codeOrg(displayCode, infostring, escaped);
+	return htmlCode
+		.replace(
+			// Display value after assignment with non-numeric value
+			/(^|<code>)(const|let)\s*(\S+)(\s*=.*[a-zA-Z].*)/gm,
+			'$1$2 $3$4 <i>// {format($3)}</i>'
+		)
+		.replace(
+			// Insert range input after variable declaration with step
+			/(^|<code>)(let)\s*(\S+)\s*=\s*(\d+):(\d+):(\d+):(\d+)(.*)/gm,
+			'$1$2 $3 = {$3}$8 <input type=range min=$4 max=$6 step=$7 bind:value={$3}>'
+		)
+		.replace(
+			// Insert range input after variable declaration
+			/(^|<code>)(let)\s*(\S+)\s*=\s*(\d+):(\d+):(\d+)(.*)/gm,
+			'$1$2 $3 = {$3}$7 <input type=range min=$4 max=$6 bind:value={$3}>'
+		);
 };
 
 function logger(prefix) {
@@ -44,10 +68,10 @@ function processMarkdown() {
 	return {
 		markup: ({ content, filename }) => {
 			if (filename.endsWith('.md')) {
-				allCode = '';
+				allRunCode = globalCode;
 				const mdresult = md.markup({ content, filename });
 				let mdHtml = mdresult.code;
-				let html = `<script>${allCode}</script>` + mdHtml;
+				let html = `<script>${allRunCode}</script>` + mdHtml;
 
 				return {
 					code: html
