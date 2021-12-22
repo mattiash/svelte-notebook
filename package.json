@@ -18,6 +18,7 @@
   },
   "type": "module",
   "dependencies": {
-    "svelte-preprocess-markdown": "^2.7.3"
+    "marked": "^4.0.8",
+    "svelte-frappe-charts": "^1.9.1"
   }
 }

@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
-import { processMarkdown } from './util/process-markdown.cjs';
+import { processMarkdown } from './util/process-marked.cjs';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
