@@ -123,7 +123,8 @@ const markdownRenderer = {
 		return `\n${'#'.repeat(level)} ${text}\n`;
 	},
 
-	// hr()
+	hr: () => '---\n',
+
 	list: (body, ordered, start) => {
 		if (ordered) {
 			function num() {
@@ -149,10 +150,21 @@ const markdownRenderer = {
 	// checkbox(boolean checked)
 	paragraph: (text) => {
 		return text + '\n';
-	}
+	},
+
 	// table(string header, string body)
 	// tablerow(string content)
 	// tablecell(string content, object flags)
+
+	// Inline render methods
+	strong: (text) => `**${text}**`,
+	em: (text) => `_${text}_`,
+	codespan: (code) => `\`${code}\``,
+	// br()
+	del: (text) => `~~${text}~~`
+	// link(string href, string title, string text)
+	// image(string href, string title, string text)
+	// text(string text)
 };
 
 function evalExpression(expr) {
