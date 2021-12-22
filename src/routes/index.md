@@ -4,7 +4,7 @@
     }
 </style>
 
-```hidden
+```webonly
 import Chart from 'svelte-frappe-charts';
 
 ```
