@@ -37,5 +37,11 @@ $: data = {
 };
 ```
 
-
 <Chart data={data} type="line" />
+
+- List item 1
+  Wrapped
+- List item 2
+  - List item 2a
+    *Wrapped*
+

@@ -124,8 +124,28 @@ const markdownRenderer = {
 	},
 
 	// hr()
-	// list(string body, boolean ordered, number start)
-	// listitem(string text, boolean task, boolean checked)
+	list: (body, ordered, start) => {
+		if (ordered) {
+			function num() {
+				const res = `${start}.`;
+				start++;
+				return res;
+			}
+
+			return body.replace(/^-/gm, num);
+		} else {
+			let items = body.trim().split('\n');
+			// items = items.map((item, i) => (i > 0 ? '  ' : '') + item);
+			return '\n' + items.join('\n') + '\n';
+		}
+	},
+
+	listitem: (text, task, checked) => {
+		let items = text.trim().split('\n');
+		items = items.map((item, i) => (i > 0 ? '  ' : '- ') + item);
+		return items.join('\n') + '\n';
+	},
+
 	// checkbox(boolean checked)
 	paragraph: (text) => {
 		return text + '\n';

@@ -12,8 +12,10 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "multi-tape": "^1.6.1",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
+    "purple-tape": "^3.9.2",
     "svelte": "^3.44.0"
   },
   "type": "module",
