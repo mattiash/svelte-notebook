@@ -1,10 +1,10 @@
 import adapter from '@sveltejs/adapter-auto';
-import { processMarkdown } from './util/process-marked.cjs';
+import { markdownSvelte } from './util/process-marked.cjs';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	extensions: ['.svelte', '.md'],
-	preprocess: [processMarkdown()],
+	preprocess: [markdownSvelte()],
 	kit: {
 		adapter: adapter(),
 

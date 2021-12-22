@@ -4,18 +4,11 @@
     }
 </style>
 
-```
+```hidden
 import Chart from 'svelte-frappe-charts';
 
-$: data = {
-    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    datasets: [
-        {
-            values: [a, 12, 3, 9, 8, 15, 9]
-        }
-    ]
-};
 ```
+
 
 # Testing
 
@@ -30,6 +23,19 @@ $: b = a+1;
 ```
 
 {b}
+
+## Chart
+
+```
+$: data = {
+    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+    datasets: [
+        {
+            values: [a, 12, 3, 9, 8, 15, 9]
+        }
+    ]
+};
+```
 
 
 <Chart data={data} type="line" />
