@@ -4,19 +4,19 @@
     }
 </style>
 
-```webonly
+```js webonly
 import Chart from 'svelte-frappe-charts';
 ```
 
 # Page 2
 
-```
+```js webonly
 let a = 1:3:5;
 ```
 
 This is good {a}
 
-```
+```js
 $: b = a+1;
 ```
 
@@ -24,7 +24,7 @@ $: b = a+1;
 
 ## Chart
 
-```
+```js
 $: data = {
     labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
     datasets: [

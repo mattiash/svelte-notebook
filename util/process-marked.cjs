@@ -42,6 +42,7 @@ const renderer = {
 		const { runCode, displayCode } = process(code, true);
 
 		allRunCode += runCode;
+		infostring = infostring.split(' ').pop();
 		if (infostring === 'hidden' || infostring === 'webonly') {
 			return '';
 		} else {
