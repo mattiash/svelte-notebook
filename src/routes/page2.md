@@ -20,7 +20,7 @@ This is good {a}
 $: b = a+1;
 ```
 
-{b}
+{ b }
 
 ## Chart
 
