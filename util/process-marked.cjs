@@ -49,7 +49,7 @@ const renderer = {
 	code: (code, infostring, escaped) => {
 		const { runCode, displayCode } = process(code, true);
 
-		allRunCode += runCode;
+		allRunCode += '\n' + runCode;
 		infostring = infostring.split(' ').pop();
 		if (infostring === 'hidden' || infostring === 'webonly') {
 			return '';
@@ -109,10 +109,11 @@ function markdownSvelte() {
 const markdownRenderer = {
 	code: (code, infostring, escaped) => {
 		const { runCode, displayCode } = process(code, false);
-		if (infostring === 'hidden') {
+		const infotype = infostring.split(/\s+/).pop();
+		if (infotype === 'hidden') {
 			allRunCode += runCode;
 			return '';
-		} else if (infostring === 'webonly') {
+		} else if (infotype === 'webonly') {
 			return '';
 		} else {
 			allRunCode += runCode;

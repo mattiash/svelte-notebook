@@ -10,7 +10,7 @@ import Chart from 'svelte-frappe-charts';
 
 # Page 2
 
-```js webonly
+```js
 let a = 1:3:5;
 ```
 
