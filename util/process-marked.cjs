@@ -23,15 +23,23 @@ function process(code, interactive) {
 			'$1 $2$3 <i>// {format($2)}</i>'
 		)
 		.replace(
+			// Display value after assignment with multi-line value
+			/^(const|let)\s*(\S+)(\s*=\s*)$/gm,
+			'$1 $2$3 <i>// {format($2)}</i>'
+		)
+		.replace(
 			// Insert range input after variable declaration with step
 			/^(let)\s*(\S+)\s*=\s*(\d+):(\d+):(\d+):(\d+)(.*)/gm,
-			'$1 $2 = {$2}$7' +
-				(interactive ? ' <input type=range min=$3 max=$5 step=$6 bind:value={$2}>' : '')
+			'$1 $2 = ' +
+				(interactive ? ' <input type=range min=$3 max=$5 step=$6 bind:value={$2}>' : '') +
+				' {$2}$7'
 		)
 		.replace(
 			// Insert range input after variable declaration
 			/^(let)\s*(\S+)\s*=\s*(\d+):(\d+):(\d+)(.*)/gm,
-			'$1 $2 = {$2}$6' + (interactive ? '<input type=range min=$3 max=$5 bind:value={$2}>' : '')
+			'$1 $2 = ' +
+				(interactive ? '<input type=range min=$3 max=$5 bind:value={$2}>' : '') +
+				' {$2}$6'
 		);
 
 	return { runCode, displayCode };
