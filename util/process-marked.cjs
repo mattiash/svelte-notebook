@@ -1,4 +1,6 @@
 const { marked } = require('marked');
+const { readFileSync } = require('fs');
+const { resolve, dirname } = require('path');
 
 const globalCode = `
 function format(num) {
@@ -7,6 +9,7 @@ function format(num) {
 `;
 
 let allRunCode = globalCode;
+let dependencies = [];
 
 function process(code, interactive) {
 	const runCode = code
@@ -19,7 +22,7 @@ function process(code, interactive) {
 		.replace(/}/g, '&#125;')
 		.replace(
 			// Display value after assignment with non-numeric value
-			/^(const|let)\s*(\S+)(\s*=.*[a-zA-Z].*)/gm,
+			/^(const|let)\s*(\S+)(\s*=.*[a-zA-Z*\/].*)/gm,
 			'$1 $2$3 <i>// {format($2)}</i>'
 		)
 		.replace(
@@ -56,6 +59,17 @@ const renderer = {
 		} else {
 			return `<pre><code>${displayCode}</code></pre>`;
 		}
+	},
+	text: (text) => {
+		text = text.replace(/svg:(\S+)/g, (_, file) => {
+			const absPath = resolve(currentDir, file);
+			const data = readFileSync(absPath).toString();
+			const data2 = data.replace(/[\s\S]*<svg/m, '<svg');
+			dependencies.push(absPath);
+			return data2;
+		});
+
+		return text;
 	}
 };
 
@@ -89,17 +103,19 @@ function markdownSvelte() {
 	return {
 		markup: ({ content, filename }) => {
 			if (filename.endsWith('.md')) {
+				currentDir = dirname(filename);
 				allRunCode = globalCode;
+				dependencies = [];
 				const mdHtml = marked.parse(content);
 				let html = `<script>${allRunCode}</script>` + mdHtml;
 
 				return {
-					code: html
+					code: html,
+					dependencies
 				};
 			} else {
 				return {
 					code: content
-					// More properties?
 				};
 			}
 		}
@@ -111,12 +127,12 @@ const markdownRenderer = {
 		const { runCode, displayCode } = process(code, false);
 		const infotype = infostring.split(/\s+/).pop();
 		if (infotype === 'hidden') {
-			allRunCode += runCode;
+			allRunCode += '\n' + runCode;
 			return '';
 		} else if (infotype === 'webonly') {
 			return '';
 		} else {
-			allRunCode += runCode;
+			allRunCode += '\n' + runCode;
 			return '\n```' + infostring + `\n${displayCode}\n` + '```\n\n';
 		}
 	},

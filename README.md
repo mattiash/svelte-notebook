@@ -65,6 +65,17 @@ you can mark it as
 Images can be added under `static/` and referred to by their path relative to `static/`,
 i.e. `static/img1.png` can be referred to as `img1.png`.
 
+## Inline Svg
+
+svg-files can be inlined into the html with
+
+```
+svg:test.svg
+```
+
+The filename is relative to the markdown file. If the svg contains `{}` expressions,
+they will be expanded just as in the markdown.
+
 ## Exporting to plain Markdown
 
 To export a plain Markdown document, run

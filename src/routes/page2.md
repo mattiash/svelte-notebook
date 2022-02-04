@@ -14,6 +14,8 @@ import Chart from 'svelte-frappe-charts';
 let a = 1:3:5;
 ```
 
+svg:test.svg
+
 This is good {a}
 
 ```js
