@@ -52,7 +52,7 @@ function process(code, interactive) {
 	return { runCode, displayCode };
 }
 
-function processSvg(file) {
+function loadFile(file) {
 	// filename relative to content file
 	const relfile = resolve(currentDir, file);
 
@@ -61,21 +61,36 @@ function processSvg(file) {
 
 	let data = undefined;
 	try {
-		data = readFileSync(relfile).toString();
+		data = readFileSync(relfile);
 		dependencies.push(relfile);
 	} catch (err) {}
 
 	if (data === undefined) {
 		try {
-			data = readFileSync(buildimageFile).toString();
+			data = readFileSync(buildimageFile);
 			dependencies.push(buildimageFile);
 		} catch (err) {}
 	}
+	return data;
+}
+
+function processSvg(file) {
+	const data = loadFile(file);
 
 	if (data === undefined) {
 		return `<b>Failed to find ${file}</b>`;
 	} else {
-		return data.replace(/[\s\S]*<svg/m, '<svg');
+		return data.toString().replace(/[\s\S]*<svg/m, '<svg');
+	}
+}
+
+function processPng(file) {
+	const data = loadFile(file);
+
+	if (data === undefined) {
+		return `<b>Failed to find ${file}</b>`;
+	} else {
+		return `<img alt="${file}" src="data:image/png;base64,${data.toString('base64')}" />`;
 	}
 }
 
@@ -92,7 +107,9 @@ const renderer = {
 		}
 	},
 	text: (text) => {
-		text = text.replace(/svg:(\S+)/g, (_, file) => processSvg(file));
+		text = text
+			.replace(/svg:(\S+)/g, (_, file) => processSvg(file))
+			.replace(/png:(\S+)/g, (_, file) => processPng(file));
 		return text;
 	}
 };

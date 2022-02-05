@@ -76,6 +76,16 @@ svg:test.svg
 The filename is relative to the markdown file or it can be under $root/buildimage/$pagename/. If the svg contains `{}` expressions,
 they will be expanded just as in the markdown.
 
+## Inline Png
+
+png-files can be inlined into the html with
+
+```
+png:test.png
+```
+
+The filename is relative to the markdown file or it can be under $root/buildimage/$pagename/. 
+
 ## Exporting to plain Markdown
 
 To export a plain Markdown document, run

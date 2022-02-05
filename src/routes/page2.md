@@ -12,6 +12,8 @@ svg:test.svg
 
 This is good {a}
 
+png:Simple_light_bulb_graphic.png
+
 ```js
 $: b = a+1;
 ```
