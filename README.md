@@ -73,7 +73,7 @@ svg-files can be inlined into the html with
 svg:test.svg
 ```
 
-The filename is relative to the markdown file. If the svg contains `{}` expressions,
+The filename is relative to the markdown file or it can be under $root/buildimage/$pagename/. If the svg contains `{}` expressions,
 they will be expanded just as in the markdown.
 
 ## Exporting to plain Markdown

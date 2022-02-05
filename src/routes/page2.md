@@ -1,9 +1,3 @@
-<style>
-    input {
-        vertical-align: bottom;
-    }
-</style>
-
 ```js webonly
 import Chart from 'svelte-frappe-charts';
 ```

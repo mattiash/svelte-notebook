@@ -1,5 +1,5 @@
 const { marked } = require('marked');
-const { readFileSync } = require('fs');
+const { readFileSync, existsSync } = require('fs');
 const { resolve, dirname } = require('path');
 
 const globalCode = `
@@ -10,6 +10,10 @@ function format(num) {
 
 let allRunCode = globalCode;
 let dependencies = [];
+
+let currentBasename = '';
+let currentDir = '';
+let projectRoot = '';
 
 function process(code, interactive) {
 	const runCode = code
@@ -48,6 +52,33 @@ function process(code, interactive) {
 	return { runCode, displayCode };
 }
 
+function processSvg(file) {
+	// filename relative to content file
+	const relfile = resolve(currentDir, file);
+
+	// buildimage/<contentfile>/<file>
+	const buildimageFile = `${projectRoot}/buildimage/${currentBasename}/${file}`;
+
+	let data = undefined;
+	try {
+		data = readFileSync(relfile).toString();
+		dependencies.push(relfile);
+	} catch (err) {}
+
+	if (data === undefined) {
+		try {
+			data = readFileSync(buildimageFile).toString();
+			dependencies.push(buildimageFile);
+		} catch (err) {}
+	}
+
+	if (data === undefined) {
+		return `<b>Failed to find ${file}</b>`;
+	} else {
+		return data.replace(/[\s\S]*<svg/m, '<svg');
+	}
+}
+
 const renderer = {
 	code: (code, infostring, escaped) => {
 		const { runCode, displayCode } = process(code, true);
@@ -61,14 +92,7 @@ const renderer = {
 		}
 	},
 	text: (text) => {
-		text = text.replace(/svg:(\S+)/g, (_, file) => {
-			const absPath = resolve(currentDir, file);
-			const data = readFileSync(absPath).toString();
-			const data2 = data.replace(/[\s\S]*<svg/m, '<svg');
-			dependencies.push(absPath);
-			return data2;
-		});
-
+		text = text.replace(/svg:(\S+)/g, (_, file) => processSvg(file));
 		return text;
 	}
 };
@@ -104,6 +128,11 @@ function markdownSvelte() {
 		markup: ({ content, filename }) => {
 			if (filename.endsWith('.md')) {
 				currentDir = dirname(filename);
+				const [, m] = filename.match(/src\/routes\/(.*)\.md$/);
+				currentBasename = m;
+				const [, m2] = filename.match(/(.*)\/src\/routes\//);
+				projectRoot = m2;
+
 				allRunCode = globalCode;
 				dependencies = [];
 				const mdHtml = marked.parse(content);

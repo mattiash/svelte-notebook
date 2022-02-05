@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.css"
+			integrity="sha512-1d9gwwC3dNW3O+lGwY8zTQrh08a41Ejci46DdzY1aQbqi/7Qr8Asp4ycWPsoD52tKXKrgu8h/lSpig1aAkvlMw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		%svelte.head%
+	</head>
 
-<head>
-	<meta charset="utf-8" />
-	<meta name="description" content="" />
-	<link rel="icon" href="/favicon.png" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.css"
-		integrity="sha512-1d9gwwC3dNW3O+lGwY8zTQrh08a41Ejci46DdzY1aQbqi/7Qr8Asp4ycWPsoD52tKXKrgu8h/lSpig1aAkvlMw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	%svelte.head%
-</head>
+	<style>
+		input {
+			vertical-align: bottom;
+		}
+	</style>
 
-<body>
-	<div class="markdown-body" id="svelte">%svelte.body%</div>
-</body>
-
+	<body>
+		<div class="markdown-body" id="svelte">%svelte.body%</div>
+	</body>
 </html>
