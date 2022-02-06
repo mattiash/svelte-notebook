@@ -6,7 +6,16 @@ const config = {
 	extensions: ['.svelte', '.md'],
 	preprocess: [markdownSvelte()],
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		routes: (filepath) => {
+			return ![
+				// exclude *test.js files
+				/.drawio$/,
+
+				// original default config
+				/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known))/
+			].some((regex) => regex.test(filepath));
+		}
 	}
 };
 

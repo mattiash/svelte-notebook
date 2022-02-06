@@ -86,6 +86,16 @@ png:test.png
 
 The filename is relative to the markdown file or it can be under $root/buildimage/$pagename/. 
 
+## Drawio integration
+
+To include svg:s generated from a drawio source, perform the following steps:
+
+1. Install [Drawio Desktop](https://github.com/jgraph/drawio-desktop)
+2. Create a .drawio file with the same name as your route next to the .md file. I.e. `src/routes/test.md` and `src/routes/test.drawio`
+3. The name of the tabs in your drawio file will be used as the name of your svg-files. No spaces!
+4. Run `util/drawio-watch`. It will generate one svg per tab in your document. The tab `pg1` will result in an svg `buildimage/test/pg1.svg`. drawio-watch will watch your drawio-file and generate new svg:s on every save.
+5. Inline the svg:s with `svg:pg1.svg`, i.e. the name of the tab is the name of the file with an svg-extension.
+
 ## Exporting to plain Markdown
 
 To export a plain Markdown document, run

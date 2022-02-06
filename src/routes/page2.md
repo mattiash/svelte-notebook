@@ -8,7 +8,7 @@ import Chart from 'svelte-frappe-charts';
 let a = 1:3:5;
 ```
 
-svg:test.svg
+svg:pg1.svg
 
 This is good {a}
 
