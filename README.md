@@ -113,8 +113,16 @@ npm run build
 ```
 
 The generated html can be found in the `build/` directory.
-Unfortunately, you need to serve it with an http server for your browser
+You need to serve it with an http server for your browser
 to be able to render it correctly.
+
+To generate self-contained html, run
+
+```
+npm run export
+```
+
+This generates self-contained html files under `export/`
 
 ## Highlighting
 

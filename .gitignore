@@ -2,6 +2,7 @@
 node_modules
 /build
 /buildimage
+/export
 /.svelte-kit
 /package
 .env

@@ -16,7 +16,7 @@
  * to use "import" on inlined javascript.
  */
 
-const { readFileSync } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const { basename } = require('path');
 
 let id = 0;
@@ -45,7 +45,11 @@ const newJs =
 	` const codeBlocks = ${JSON.stringify(result)}\n` +
 	readFileSync(__dirname + '/inlinejs-browser.js');
 
-console.log(replaceMainJs(html, newJs));
+const m = file.match(/build\/.*?([^/]+)\/index.html$/);
+const outputName = m ? m[1] + '.html' : 'index.html';
+
+console.log(`Generating export/${outputName}`);
+writeFileSync(`export/${outputName}`, replaceMainJs(html, newJs));
 
 function processJs(path) {
 	const name = basename(path);
