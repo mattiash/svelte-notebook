@@ -99,5 +99,9 @@ function getMainJs(html) {
 }
 
 function replaceMainJs(html, newJs) {
-	return html.replace(/(<script type="module".*?>)([\s\S]+?)(<\/script>)/, `$1${newJs}$3`);
+	// Cannot replace with a string with "$1" since newJs might contain $1.
+	return html.replace(
+		/(<script type="module".*?>)([\s\S]+?)(<\/script>)/,
+		(_, start) => `${start}${newJs}</script>`
+	);
 }
