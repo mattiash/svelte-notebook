@@ -75,7 +75,7 @@ function loadFile(file, extension) {
 	return data;
 }
 
-function processSvg(file) {
+function processSvgInline(file) {
 	const data = loadFile(file, 'svg');
 
 	if (data === undefined) {
@@ -88,8 +88,10 @@ function processSvg(file) {
 function processDrawio(file) {
 	if (process.env.DRAWIO_FMT === 'png') {
 		return processPng(file);
-	} else {
+	} else if (process.env.DRAWIO_FMT === 'svg') {
 		return processSvg(file);
+	} else {
+		return processSvgInline(file);
 	}
 }
 
@@ -100,6 +102,16 @@ function processPng(file) {
 		return `<b>Failed to find png ${file}</b>`;
 	} else {
 		return `<img alt="${file}" src="data:image/png;base64,${data.toString('base64')}" />`;
+	}
+}
+
+function processSvg(file) {
+	const data = loadFile(file, 'svg');
+
+	if (data === undefined) {
+		return `<b>Failed to find svg ${file}</b>`;
+	} else {
+		return `<img alt="${file}" src="data:image/svg+xml;base64,${data.toString('base64')}" />`;
 	}
 }
 
@@ -117,7 +129,7 @@ const renderer = {
 	},
 	text: (text) => {
 		text = text
-			.replace(/svg:(\S+)/g, (_, file) => processSvg(file))
+			.replace(/svg:(\S+)/g, (_, file) => processSvgInline(file))
 			.replace(/drawio:(\S+)/g, (_, file) => processDrawio(file))
 			.replace(/png:(\S+)/g, (_, file) => processPng(file));
 		return text;

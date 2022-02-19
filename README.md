@@ -124,6 +124,18 @@ npm run export
 
 This generates self-contained html files under `export/`
 
+It is also possible to generate self-contained html-files with svg as img tags:
+
+```
+npm run export-svg
+```
+
+or with drawio as png images
+
+```
+npm run export-png
+```
+
 ## Highlighting
 
 Install a markdown plugin in vscode (or your editor of choice).
