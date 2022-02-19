@@ -15,7 +15,7 @@ let currentBasename = '';
 let currentDir = '';
 let projectRoot = '';
 
-function process(code, interactive) {
+function processCode(code, interactive) {
 	const runCode = code
 		// Replace ranges with default value
 		.replace(/\d+:(\d+):\d+(:\d+){0,1}/g, '$1');
@@ -85,6 +85,14 @@ function processSvg(file) {
 	}
 }
 
+function processDrawio(file) {
+	if (process.env.DRAWIO_FMT === 'png') {
+		return processPng(file);
+	} else {
+		return processSvg(file);
+	}
+}
+
 function processPng(file) {
 	const data = loadFile(file, 'png');
 
@@ -97,7 +105,7 @@ function processPng(file) {
 
 const renderer = {
 	code: (code, infostring, escaped) => {
-		const { runCode, displayCode } = process(code, true);
+		const { runCode, displayCode } = processCode(code, true);
 
 		allRunCode += '\n' + runCode;
 		infostring = infostring.split(' ').pop();
@@ -110,7 +118,7 @@ const renderer = {
 	text: (text) => {
 		text = text
 			.replace(/svg:(\S+)/g, (_, file) => processSvg(file))
-			.replace(/drawio:(\S+)/g, (_, file) => processSvg(file))
+			.replace(/drawio:(\S+)/g, (_, file) => processDrawio(file))
 			.replace(/png:(\S+)/g, (_, file) => processPng(file));
 		return text;
 	}
@@ -172,7 +180,7 @@ function markdownSvelte() {
 
 const markdownRenderer = {
 	code: (code, infostring, escaped) => {
-		const { runCode, displayCode } = process(code, false);
+		const { runCode, displayCode } = processCode(code, false);
 		const infotype = infostring.split(/\s+/).pop();
 		if (infotype === 'hidden') {
 			allRunCode += '\n' + runCode;
