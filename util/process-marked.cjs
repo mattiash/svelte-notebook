@@ -52,12 +52,13 @@ function process(code, interactive) {
 	return { runCode, displayCode };
 }
 
-function loadFile(file) {
+function loadFile(file, extension) {
+	const fullname = `${file}.${extension}`;
 	// filename relative to content file
-	const relfile = resolve(currentDir, file);
+	const relfile = resolve(currentDir, fullname);
 
-	// buildimage/<contentfile>/<file>
-	const buildimageFile = `${projectRoot}/buildimage/${currentBasename}/${file}`;
+	// buildimage/<contentfile>/<fullname>
+	const buildimageFile = `${projectRoot}/buildimage/${currentBasename}/${fullname}`;
 
 	let data = undefined;
 	try {
@@ -75,7 +76,7 @@ function loadFile(file) {
 }
 
 function processSvg(file) {
-	const data = loadFile(file);
+	const data = loadFile(file, 'svg');
 
 	if (data === undefined) {
 		return `<b>Failed to find ${file}</b>`;
@@ -85,10 +86,10 @@ function processSvg(file) {
 }
 
 function processPng(file) {
-	const data = loadFile(file);
+	const data = loadFile(file, 'png');
 
 	if (data === undefined) {
-		return `<b>Failed to find ${file}</b>`;
+		return `<b>Failed to find png ${file}</b>`;
 	} else {
 		return `<img alt="${file}" src="data:image/png;base64,${data.toString('base64')}" />`;
 	}
@@ -109,6 +110,7 @@ const renderer = {
 	text: (text) => {
 		text = text
 			.replace(/svg:(\S+)/g, (_, file) => processSvg(file))
+			.replace(/drawio:(\S+)/g, (_, file) => processSvg(file))
 			.replace(/png:(\S+)/g, (_, file) => processPng(file));
 		return text;
 	}

@@ -8,11 +8,11 @@ import Chart from 'svelte-frappe-charts';
 let a = 1:3:5;
 ```
 
-svg:pg1.svg
+drawio:pg1
 
 This is good {a}
 
-png:Simple_light_bulb_graphic.png
+png:Simple_light_bulb_graphic
 
 ```js
 $: b = a+1;
