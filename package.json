@@ -31,7 +31,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@mattiash/drawio-export": "^1.0.0",
+    "@mattiash/drawio-export": "^1.1.0",
     "marked": "^4.0.12",
     "svelte-frappe-charts": "^1.9.1"
   }
