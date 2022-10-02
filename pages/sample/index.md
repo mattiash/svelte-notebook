@@ -15,7 +15,7 @@ This is good {a}
 png:Simple_light_bulb_graphic
 
 ```js
-$: b = a+1;
+$: b = a + 1;
 ```
 
 { b }
@@ -24,12 +24,12 @@ $: b = a+1;
 
 ```js
 $: data = {
-    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    datasets: [
-        {
-            values: [a, 12, 3, 9, 8, 15, 9]
-        }
-    ]
+	labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+	datasets: [
+		{
+			values: [a, 12, 3, 9, 8, 15, 9]
+		}
+	]
 };
 ```
 

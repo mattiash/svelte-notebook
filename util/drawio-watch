@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo ${DRAWIO_FMT:-svg}
-
-find src/routes -type f -name "*.drawio" | sed 's%^src/routes/\(.*\).drawio$%\1%' | xargs -P 0 -I{} sh -c 'mkdir -p ./buildimage/{}/; ./node_modules/.bin/drawio-export -o ./buildimage/{}/ -f $DRAWIO_FMT --watch src/routes/{}.drawio'

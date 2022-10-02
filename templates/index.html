@@ -3,9 +3,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="description" content="" />
-		<link rel="icon" href="/favicon.png" />
+		<link rel="icon" href="data:," />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%svelte.head%
 	</head>
 
 	<!-- prettier-ignore -->
@@ -24,6 +23,10 @@
 	</style>
 
 	<body>
-		<div class="markdown-body" id="svelte">%svelte.body%</div>
+		<div class="markdown-body" id="svelte"></div>
 	</body>
+
+	<script defer>
+		%%javascript%%
+	</script>
 </html>
