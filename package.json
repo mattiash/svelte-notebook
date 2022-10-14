@@ -2,11 +2,24 @@
   "name": "svelte-notebook",
   "version": "0.0.1",
   "scripts": {
+    "dev": "DEV=y run-s build; DEV=y run-p watch serve",
+    "serve": "live-server output/",
+    "watch": "npm-watch",
     "build": "node index.js",
     "clean": "rm -rf build output"
   },
+  "watch": {
+    "build": {
+      "patterns": [
+        "pages"
+      ],
+      "extensions": "md"
+    }
+  },
   "devDependencies": {
+    "live-server": "^1.2.2",
     "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.11.0",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.7.0",
     "svelte": "^3.50.0"
@@ -14,10 +27,10 @@
   "type": "module",
   "dependencies": {
     "@mattiash/drawio-export": "^1.1.0",
-    "marked": "^4.1.0",
-    "rollup": "^2.79.0",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^14.1.0",
+    "marked": "^4.1.0",
+    "rollup": "^2.79.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",

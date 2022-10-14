@@ -1,10 +1,5 @@
 .DS_Store
 node_modules
-/build
-/buildimage
-/export
-/.svelte-kit
-/package
-.env
-.env.*
-!.env.example
+build/
+buildimage/
+output/

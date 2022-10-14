@@ -11,6 +11,12 @@ npm run build
 
 Look at files generated under output/
 
+## Watching and regenerating
+
+```
+npm run dev
+```
+
 ## Adding a new page
 
 ```

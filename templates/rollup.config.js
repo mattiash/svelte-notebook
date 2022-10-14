@@ -2,7 +2,9 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
-import postcss from 'rollup-plugin-postcss';
+// import postcss from 'rollup-plugin-postcss';
+
+const dev = !!process.env.DEV;
 
 export default {
 	input: '%%input%%',
@@ -14,7 +16,7 @@ export default {
 	},
 	plugins: [
 		svelte(),
-		postcss(),
+		// postcss(),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -26,7 +28,7 @@ export default {
 			extensions: ['.js', '.svelte']
 		}),
 
-		terser()
+		dev ? undefined : terser()
 	],
 	watch: {
 		clearScreen: false
