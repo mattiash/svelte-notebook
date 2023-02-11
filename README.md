@@ -106,6 +106,14 @@ To include svg:s generated from a drawio source, perform the following steps:
 drawio:tab1
 ```
 
+## Importing javascript
+
+Common javascript code can be placed under `lib/` and imported using `$lib`:
+
+```js
+import * from '$lib/format.js'
+```
+
 ## Exporting to plain Markdown
 
 **TODO**
@@ -113,7 +121,9 @@ drawio:tab1
 To export a plain Markdown document, run
 
 ```
+
 node util/eval-markdown.js < src/routes/page2.md
+
 ```
 
 This is useful for importing the finalized document into other systems that understand markdown.
@@ -121,7 +131,9 @@ This is useful for importing the finalized document into other systems that unde
 ## Exporting as html
 
 ```
+
 npm run build
+
 ```
 
 The generated html can be found in the `output/` directory as one file per page.
@@ -142,7 +154,8 @@ install the Highlight plugin by Fabio Spampinato.
 
 Configure it with (included in workspace already):
 
-```
+````
+
     "highlight.regexes": {
         "({)(.*?)(})": {
             "filterLanguageRegex": "markdown",
@@ -155,4 +168,8 @@ Configure it with (included in workspace already):
             ],
         }
     },
+
 ```
+
+```
+````

@@ -74,7 +74,8 @@ class Renderer {
 	processCode(code, interactive) {
 		const runCode = code
 			// Replace ranges with default value
-			.replace(/\d+:(\d+):\d+(:\d+){0,1}/g, '$1');
+			.replace(/\d+:(\d+):\d+(:\d+){0,1}/g, '$1')
+			.replace(/\$lib\//g, '../../../lib/');
 
 		const displayCode = code
 			.replace(/\$: /g, 'let ')

@@ -1,5 +1,6 @@
 ```js webonly
 import Chart from 'svelte-frappe-charts';
+import { hello } from '$lib/format.js';
 ```
 
 # Sample
@@ -12,7 +13,7 @@ drawio:pg1
 
 This is a: {a}
 
-Another paragraph.
+Another paragraph. {hello()}
 
 png:Simple_light_bulb_graphic
 
