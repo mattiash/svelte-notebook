@@ -1,6 +1,6 @@
 ```js webonly
 import Chart from 'svelte-frappe-charts';
-import { hello } from '$lib/format.js';
+import { Mbps } from '$lib/format.js';
 ```
 
 # Sample
@@ -13,7 +13,7 @@ drawio:pg1
 
 This is a: {a}
 
-Another paragraph. {hello()}
+Another paragraph. {Mbps(1234)}
 
 png:Simple_light_bulb_graphic
 
