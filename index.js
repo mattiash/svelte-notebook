@@ -1,4 +1,4 @@
-import { htmlFromMarkdown } from './lib/markdown.js';
+import { htmlFromMarkdown } from './src/markdown.js';
 import { mkdir, writeFile, copyFile, readFile, rm, stat, readdir } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import { exec } from 'node:child_process';
