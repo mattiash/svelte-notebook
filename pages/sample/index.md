@@ -25,6 +25,8 @@ $: c = a < 2;
 Code with <html>
 ```
 
+    Indented code with <html>
+
 ## Chart
 
 ```js
