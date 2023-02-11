@@ -53,7 +53,9 @@ async function generateDrawioIfUpdated(doc) {
 	) {
 		console.log(doc, 'drawio');
 		const res = await execP(
-			`./node_modules/.bin/drawio-export -o ${drawio}/${doc}/ -f svg ${pages}/${doc}/index.drawio`
+			`./node_modules/.bin/drawio-export -o ${drawio}/${doc}/ -f ${
+				process.env.DRAWIO_FMT || 'svg'
+			} ${pages}/${doc}/index.drawio`
 		);
 		console.log(res.stdout, res.stderr);
 	}
