@@ -10,7 +10,9 @@ let a = 1:3:5;
 
 drawio:pg1
 
-This is good {a}
+This is a: {a}
+
+Another paragraph.
 
 png:Simple_light_bulb_graphic
 
