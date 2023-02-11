@@ -16,9 +16,14 @@ png:Simple_light_bulb_graphic
 
 ```js
 $: b = a + 1;
+$: c = a < 2;
 ```
 
-{ b }
+{ b } { c }
+
+```
+Code with <html>
+```
 
 ## Chart
 
