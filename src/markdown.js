@@ -111,7 +111,7 @@ class Renderer {
 	}
 
 	processEscapeOnly(code) {
-		return code.replace(/{/g, '&#123;').replace(/}/g, '&#125;').replace(/</, '&lt;');
+		return code.replace(/{/g, '&#123;').replace(/}/g, '&#125;').replace(/</g, '&lt;');
 	}
 
 	renderer() {
