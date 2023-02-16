@@ -14,6 +14,9 @@ class Renderer {
 		this.paths = paths;
 		this.allRunCode = globalCode;
 		this.dependencies = [];
+
+		// Special mode for copy-pasting to other applications
+		this.export = false;
 	}
 
 	loadFile(file, extension) {
@@ -42,7 +45,9 @@ class Renderer {
 	}
 
 	processDrawio(file) {
-		if (process.env.DRAWIO_FMT === 'png') {
+		if (this.export) {
+			return `drawio:file`;
+		} else if (process.env.DRAWIO_FMT === 'png') {
 			return this.processPng(file);
 		} else if (process.env.DRAWIO_FMT === 'svg') {
 			return this.processSvg(file);
@@ -139,7 +144,9 @@ class Renderer {
 				return text;
 			},
 			paragraph: (content) => {
-				if (content.startsWith('<img') || content.startsWith('<svg')) {
+				if (content === '::export') {
+					this.export = true;
+				} else if (content.startsWith('<img') || content.startsWith('<svg')) {
 					return `<p class="img">${content}</p>`;
 				} else {
 					return `<p>${content}</p>${SPACER_P}`;

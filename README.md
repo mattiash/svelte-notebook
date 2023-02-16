@@ -106,6 +106,11 @@ To include svg:s generated from a drawio source, perform the following steps:
 drawio:tab1
 ```
 
+## Export mode
+
+A document can be switched to export mode with a paragraph with the string '::export'.
+This will make the output suitable for copy-pasting to other applications.
+
 ## Importing javascript
 
 Common javascript code can be placed under `lib/` and imported using `$lib`:
