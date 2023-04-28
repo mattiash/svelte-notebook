@@ -1,6 +1,11 @@
 ```js webonly
 import Chart from 'svelte-frappe-charts';
 import { Mbps } from '$lib/format.js';
+import mermaid from '../../../node_modules/mermaid';
+mermaid.initialize({
+	securityLevel: 'loose',
+	theme: 'forest'
+});
 ```
 
 # Sample
@@ -52,3 +57,12 @@ $: data = {
 - List ~~item~~ 2
   - List item 2a
     _Wrapped_
+
+## Mermaid
+
+```mermaid
+graph LR
+      A --- B
+      B-->C[forbidden]
+      B-->D(ok);
+```

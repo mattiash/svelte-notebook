@@ -91,10 +91,12 @@ async function generateOutput(doc) {
 	console.log(doc, 'output');
 	// Generate output
 	// html/js -> html with inline js
-	const js = (await readFile(`${stage2}/${doc}/bundle.js`)).toString();
+	const js = (await readFile(`${stage2}/${doc}/bundle.js`))
+		.toString()
+		.replace(/<\/body>/g, '</body >'); // Work-around for live-reload
 	let html = (await readFile(`${templates}/index.html`)).toString();
-	html = html.replace('%%javascript%%', js);
-	await writeFile(`${output}/${doc}.html`, html);
+	const [before, after] = html.split('%%xxjavascript%%');
+	await writeFile(`${output}/${doc}.html`, before + js + after);
 }
 
 async function run() {

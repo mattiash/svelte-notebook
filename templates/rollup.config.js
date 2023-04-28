@@ -12,7 +12,9 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: '%%output%%'
+		file: '%%output%%',
+		// plugins: [terser()],
+		manualChunks: () => 'everything.js'
 	},
 	plugins: [
 		svelte(),

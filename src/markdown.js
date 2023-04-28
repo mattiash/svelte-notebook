@@ -132,6 +132,8 @@ class Renderer {
 					} else {
 						return `<pre><code>${displayCode}</code></pre>`;
 					}
+				} else if (lang === 'mermaid') {
+					return `<pre class="mermaid">${code}</pre>`;
 				} else {
 					return `<pre><code>${this.processEscapeOnly(code)}</code></pre>`;
 				}
