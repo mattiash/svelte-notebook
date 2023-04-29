@@ -64,3 +64,13 @@ graph LR
       B-->C[forbidden]
       B-->D(ok);
 ```
+
+## Latex
+
+This is an embedded latex expression
+
+$$
+V_{sphere} = \frac{4}{3}\pi r^3
+$$
+
+and another paragraph

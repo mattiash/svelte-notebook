@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import { readFileSync } from 'fs';
+import Mathjax from 'mathjax';
 
 const globalCode = `
 function format(num) {
@@ -298,14 +299,20 @@ function roundtrip(markdown) {
 		.replace(/&#125;/g, '}');
 }
 
-export function htmlFromMarkdown(filename, paths) {
+export async function htmlFromMarkdown(filename, paths) {
 	const renderer = new Renderer(paths);
-
+	const mathjax = await Mathjax.init({
+		loader: { load: ['input/tex', 'output/svg'] }
+	}).catch((err) => console.log(err.message));
 	marked.use({ renderer: renderer.renderer() });
 
 	const content = readFileSync(filename).toString();
 
-	const mdHtml = marked.parse(content);
+	const content2 = content.replace(/\$\$([\s\S]*?)\$\$/g, (_, s) => {
+		const svg = MathJax.tex2svg(s, { display: true });
+		return MathJax.startup.adaptor.outerHTML(svg);
+	});
+	const mdHtml = marked.parse(content2);
 	const mdHtml2 = mdHtml.replace(new RegExp(SPACER_P + '(?!<p>)', 'g'), '');
 	return `<script>${renderer.allRunCode}</script>` + mdHtml2;
 }

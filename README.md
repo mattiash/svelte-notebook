@@ -120,6 +120,16 @@ Insert a [Mermaid](https://mermaid.js.org/) diagram with a mermaid code-section
         B-->D(ok);
     ```
 
+## Latex
+
+Render Latex with
+
+```
+$$
+V_{sphere} = \frac{4}{3}\pi r^3
+$$
+```
+
 ## Export mode
 
 A document can be switched to export mode with a paragraph with the string '::export'.

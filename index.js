@@ -87,7 +87,7 @@ async function generateStage1(doc) {
 	await copyFile(`${templates}/index.js`, `${stage1}/${doc}/index.js`);
 	await writeFile(
 		`${stage1}/${doc}/index.svelte`,
-		htmlFromMarkdown(`${pages}/${doc}/index.md`, [`${pages}/${doc}`, `${drawio}/${doc}`])
+		await htmlFromMarkdown(`${pages}/${doc}/index.md`, [`${pages}/${doc}`, `${drawio}/${doc}`])
 	);
 }
 
