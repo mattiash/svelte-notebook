@@ -1,11 +1,6 @@
 ```js webonly
 import Chart from 'svelte-frappe-charts';
 import { Mbps } from '$lib/format.js';
-import mermaid from '../../../node_modules/mermaid';
-mermaid.initialize({
-	securityLevel: 'loose',
-	theme: 'forest'
-});
 ```
 
 # Sample

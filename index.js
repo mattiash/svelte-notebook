@@ -1,7 +1,8 @@
 import { htmlFromMarkdown } from './src/markdown.js';
-import { mkdir, writeFile, copyFile, readFile, rm, stat, readdir } from 'node:fs/promises';
+import { mkdir, writeFile, copyFile, readFile, rm, stat, readdir, open } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import { exec } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
 const execP = promisify(exec);
 
 const pages = 'pages';
@@ -45,6 +46,22 @@ async function ensureDirs(doc) {
 	await mkdir(`${stage1}/${doc}`, { recursive: true });
 	await mkdir(`${stage2}/${doc}`, { recursive: true });
 	await mkdir(`${output}`, { recursive: true });
+}
+
+async function ensureMermaid() {
+	if (
+		(await modifiedTime(`${build}/mermaid.min.js`)) <
+		(await modifiedTime(`${templates}/mermaid.js`))
+	) {
+		console.log('mermaid.min.js');
+		await execP(
+			`./node_modules/.bin/rollup -c ${templates}/rollup.config.mermaid.js -o ${build}/mermaid1.min.js ${templates}/mermaid.js`
+		);
+		const js = (await readFile(`${build}/mermaid1.min.js`))
+			.toString()
+			.replace(/<\/body>/g, '</body >'); // Work-around for live-reload
+		await writeFileSync(`${build}/mermaid.min.js`, js);
+	}
 }
 
 async function generateDrawioIfUpdated(doc) {
@@ -91,17 +108,24 @@ async function generateOutput(doc) {
 	console.log(doc, 'output');
 	// Generate output
 	// html/js -> html with inline js
-	const js = (await readFile(`${stage2}/${doc}/bundle.js`))
-		.toString()
-		.replace(/<\/body>/g, '</body >'); // Work-around for live-reload
+	const js = await readFile(`${stage2}/${doc}/bundle.js`);
 	let html = (await readFile(`${templates}/index.html`)).toString();
 	const [before, after] = html.split('%%xxjavascript%%');
-	await writeFile(`${output}/${doc}.html`, before + js + after);
+	const fh = await open(`${output}/${doc}.html`, 'w');
+	await fh.write(before);
+	await fh.write(js);
+	if (js.includes('mermaid')) {
+		const mermaid = await readFile(`${build}/mermaid.min.js`);
+		await fh.write(mermaid);
+	}
+	await fh.write(after);
+	await fh.close();
 }
 
 async function run() {
 	for (const doc of await readdir(pages)) {
 		await ensureDirs(doc);
+		await ensureMermaid();
 		if ((await modifiedTime(`${output}/${doc}.html`)) < (await modifiedTime(`${pages}/${doc}`))) {
 			await generateDrawioIfUpdated(doc);
 			await generateStage1(doc);
