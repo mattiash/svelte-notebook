@@ -106,6 +106,20 @@ To include svg:s generated from a drawio source, perform the following steps:
 drawio:tab1
 ```
 
+## Mermaid
+
+Insert a [Mermaid](https://mermaid.js.org/) diagram with a mermaid code-section
+
+    ```mermaid
+    ---
+    title: Test diagram
+    ---
+    graph LR
+        A --- B
+        B-->C[forbidden]
+        B-->D(ok);
+    ```
+
 ## Export mode
 
 A document can be switched to export mode with a paragraph with the string '::export'.

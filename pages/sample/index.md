@@ -56,6 +56,9 @@ $: data = {
 ## Mermaid
 
 ```mermaid
+---
+title: Test diagram
+---
 graph LR
       A --- B
       B-->C[forbidden]
